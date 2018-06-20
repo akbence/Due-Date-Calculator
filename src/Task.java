@@ -4,10 +4,6 @@ import java.util.Calendar;
 
 public class Task {
 
-    public static void main(String[] args) {
-
-    }
-
     /**
      * Calculates the time which is needed by the project
      * @param calendar Actual date which implements the Calendar interface (e.g. GregorianCalendar).
@@ -42,17 +38,17 @@ public class Task {
     }
 
     private Calendar updateDaysAndHours(Calendar cleanCalendar, int neededDays, int neededHours) {
-        Calendar updatedDays = updateDays(cleanCalendar, neededDays);
+        Calendar updatedDays = updateDays(neededDays, cleanCalendar);
         Calendar updatedHours = updateHours(neededHours, updatedDays);
         return updatedHours;
     }
 
-    private Calendar updateDays(Calendar cleanCalendar, int neededDays) {
+    private Calendar updateDays(int neededDays,Calendar cleanCalendar) {
         Calendar updatedDays;
         updatedDays=(Calendar) cleanCalendar.clone();
         for (int i = 0; i < neededDays; i++) {
             updatedDays.add(Calendar.DAY_OF_YEAR, 1);
-            skipIfWeekend(updatedDays);
+            updatedDays=addTwoDaysIfSaturday(updatedDays);
         }
         return updatedDays;
     }
@@ -62,23 +58,25 @@ public class Task {
         updatedHours=(Calendar) updatedDays.clone();
         for (int i = 0; i < neededHours; i++) {
             updatedHours.add(Calendar.HOUR, 1);
-            addDayIfWorkshiftOver(updatedHours);
+            updatedHours=addDayIfWorkshiftOver(updatedHours);
         }
         return updatedHours;
     }
 
-    private void addDayIfWorkshiftOver(Calendar updatedDays) {
+    private Calendar addDayIfWorkshiftOver(Calendar updatedDays) {
         if(updatedDays.get(Calendar.HOUR_OF_DAY)==17) {
             updatedDays.add(Calendar.DAY_OF_YEAR, 1);
             updatedDays.set(Calendar.HOUR_OF_DAY, 9);
-            skipIfWeekend(updatedDays);
+            updatedDays=addTwoDaysIfSaturday(updatedDays);
         }
+        return  updatedDays;
     }
 
-    private void skipIfWeekend(Calendar updatedDays) {
+    private Calendar addTwoDaysIfSaturday(Calendar updatedDays) {
         if (updatedDays.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
             updatedDays.add(Calendar.DAY_OF_YEAR, 2);
         }
+        return updatedDays;
     }
 
     private int calculateHours(int neededHours) {
