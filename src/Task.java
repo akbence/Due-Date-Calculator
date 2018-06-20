@@ -8,14 +8,14 @@ public class Task {
      * Calculates the time which is needed by the project
      *
      * @param calendar Actual date which implements the Calendar interface (e.g. GregorianCalendar).
-     * @param hours    The hours which is needed to complete a project.
+     * @param totalHours    The hours which is needed to complete a project.
      * @return The date in Calendar format.
      */
-    public Calendar whenFinish(Calendar calendar, int hours) {
+    public Calendar CalculateDueDate(Calendar calendar, int totalHours) {
         checkIfValidDate(calendar);
         Calendar cleanCalendar = clearSecondsAndMilliseconds(calendar);
-        int neededDays = calculateDays(hours);
-        int neededHours = calculateHours(hours);
+        int neededDays = calculateDays(totalHours);
+        int neededHours = calculateHours(totalHours);
         Calendar finishDateCalendar = updateDaysAndHours(cleanCalendar, neededDays, neededHours);
         return finishDateCalendar;
     }

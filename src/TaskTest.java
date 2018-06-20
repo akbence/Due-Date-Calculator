@@ -30,43 +30,43 @@ class Tests {
     @Test
     void testPlusZero() {
         compare.set(2018, 5, 21, 10, 15);
-        assertEquals(compare,task.whenFinish(baseDate,0));
+        assertEquals(compare,task.CalculateDueDate(baseDate,0));
     }
 
     @Test
     void testPlusOneHour() {
         compare.set(2018, 5, 21, 11, 15);
-        assertEquals(compare,task.whenFinish(baseDate,1));
+        assertEquals(compare,task.CalculateDueDate(baseDate,1));
     }
 
     @Test
     void testPlusNextDay() {
         compare.set(2018, 5, 22, 10, 15);
-        assertEquals(compare,task.whenFinish(baseDate, 8));
+        assertEquals(compare,task.CalculateDueDate(baseDate, 8));
     }
 
     @Test
     void testWeekendNotAllowed() {
         compare.set(2018, 5, 25, 10, 15);
-        assertEquals(compare,task.whenFinish(baseDate, 16));
+        assertEquals(compare,task.CalculateDueDate(baseDate, 16));
     }
     @Test
     void testAfter5Pm() {
         compare.set(2018, 5, 22, 9, 15);
-        assertEquals(compare,task.whenFinish(baseDate,7));
+        assertEquals(compare,task.CalculateDueDate(baseDate,7));
     }
 
     @Test
     void  testDontReachWeekendWithHours(){
         compare.set(2018, 5, 25, 9, 15);
-        assertEquals(compare,task.whenFinish(baseDate,15));
+        assertEquals(compare,task.CalculateDueDate(baseDate,15));
     }
 
     @Test
     void testBefore9AmException() {
         baseDate.set(2018, 5, 21, 7, 15);
         assertThrows(IllegalArgumentException.class, () -> {
-            task.whenFinish(baseDate,0);
+            task.CalculateDueDate(baseDate,0);
         });
     }
 
@@ -74,7 +74,7 @@ class Tests {
     void testAfter5PmException() {
         baseDate.set(2018, 5, 21, 17, 15);
         assertThrows(IllegalArgumentException.class, () -> {
-            task.whenFinish(baseDate,0);
+            task.CalculateDueDate(baseDate,0);
         });
     }
 
@@ -82,7 +82,7 @@ class Tests {
     void testWeekendStartException() {
         baseDate.set(2018, 5, 23, 12, 15);
         assertThrows(IllegalArgumentException.class, () -> {
-            task.whenFinish(baseDate,0);
+            task.CalculateDueDate(baseDate,0);
         });
     }
 
