@@ -42,10 +42,8 @@ public class Task {
     }
 
     private Calendar updateDaysAndHours(Calendar cleanCalendar, int neededDays, int neededHours) {
-        Calendar updatedDays;
-        updatedDays = updateDays(cleanCalendar, neededDays);
-        Calendar updatedHours;
-        updatedHours = updateHours(neededHours, updatedDays);
+        Calendar updatedDays = updateDays(cleanCalendar, neededDays);
+        Calendar updatedHours = updateHours(neededHours, updatedDays);
         return updatedHours;
     }
 
@@ -88,8 +86,7 @@ public class Task {
         return neededHours;
     }
     private int calculateDays(int neededHours) {
-        int neededDays=0;
-        neededDays=neededHours/8;
+        int neededDays=neededHours/8;
         return neededDays;
     }
 
