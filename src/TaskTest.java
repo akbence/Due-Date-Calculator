@@ -63,5 +63,30 @@ class Tests {
         assertEquals(compare,task.whenFinish(baseDate,15));
     }
 
+    @Test
+    void testBefore9AmException() {
+        baseDate.set(2018, 5, 21, 7, 15);
+        assertThrows(IllegalArgumentException.class, () -> {
+            task.whenFinish(baseDate,0);
+        });
+    }
+
+    @Test
+    void testAfter5PmException() {
+        baseDate.set(2018, 5, 21, 17, 15);
+        assertThrows(IllegalArgumentException.class, () -> {
+            task.whenFinish(baseDate,0);
+        });
+    }
+
+    @Test
+    void testWeekendStartException() {
+        baseDate.set(2018, 5, 23, 12, 15);
+        assertThrows(IllegalArgumentException.class, () -> {
+            task.whenFinish(baseDate,0);
+        });
+    }
+
+
 
 }

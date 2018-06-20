@@ -1,7 +1,6 @@
 
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Task {
 
@@ -16,11 +15,30 @@ public class Task {
      * @return The date in Calendar format.
      */
     public Calendar whenFinish (Calendar calendar, int hours) {
+        checkIfValidDate(calendar);
         Calendar cleanCalendar = clearSecondsAndMilliseconds(calendar);
         int neededDays = calculateDays(hours);
         int neededHours = calculateHours(hours);
         Calendar finishDateCalendar=updateDaysAndHours(cleanCalendar, neededDays, neededHours);
         return finishDateCalendar;
+    }
+
+    private void checkIfValidDate(Calendar calendar) {
+        checkIfWorkingHours(calendar);
+        checkIfWeekday(calendar);
+    }
+
+    private void checkIfWeekday(Calendar calendar) {
+        if((calendar.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY )
+            || (calendar.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY )){
+            throw new IllegalArgumentException("Basedate not in weekday");
+        }
+    }
+
+    private void checkIfWorkingHours(Calendar calendar) {
+        if(calendar.get(Calendar.HOUR)<9 || calendar.get(Calendar.HOUR)>17  ){
+            throw new IllegalArgumentException("Basedate not in working hours");
+        }
     }
 
     private Calendar updateDaysAndHours(Calendar cleanCalendar, int neededDays, int neededHours) {
